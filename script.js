@@ -96,10 +96,51 @@ for (var i = 0; i<finances.length; i++){
     totalSum +=finances[i][1];
 }
 
-// average
-var average = totalSum / (finances.length -1);
+// average change
+
+var totalChange = 0;
+
+for (var i = 1; i < finances.length; i++) {
+  var change = finances[i][1] - finances[i - 1][1];
+  totalChange += change;
+}
+
+// Calculate average change
+var averageChange = totalChange / (finances.length - 1);
+
 
 // Greatest increase
+var maxChange = finances[1][1] - finances[0][1];
+var maxChangeMonth = finances[1][0];
+
+for (var i = 2; i < finances.length; i++) {
+  var change = finances[i][1] - finances[i - 1][1];
+
+  if (change > maxChange) {
+    maxChange = change;
+    maxChangeMonth = finances[i][0];
+  }
+}
+
 // Greatest decrease
 
-console.log("Financial Analysis" + "\nTotal months: " + totalMonths + "\nTotal: $" + totalSum + "\nAverage Change:" + average);
+var maxDecrease = finances[1][1] - finances[0][1];
+var maxDecreaseMonth = finances[1][0];
+
+for (var i = 2; i < finances.length; i++) {
+  var change = finances[i][1] - finances[i - 1][1];
+
+  if (change < maxDecrease) {
+    maxDecrease = change;
+    maxDecreaseMonth = finances[i][0];
+  }
+}
+
+// Console log
+
+console.log("Financial Analysis" + 
+"\nTotal months: " + totalMonths + 
+"\nTotal: $" + totalSum + 
+"\nAverage Change: $", averageChange.toFixed(2) + 
+"\nGreatest Increase in Profits/Losses: " + maxChangeMonth + " $" + maxChange + 
+"\nGreatest Decrease in Profits/Losses: " + maxDecreaseMonth + " $" + maxDecrease);
